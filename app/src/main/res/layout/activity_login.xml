@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="@id/imageView3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="693dp"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="198dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="40dp"
+                android:height="43dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Selamat Datang di"
+                android:textColor="#2E2828"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="199dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="0dp"
+                android:height="43dp"
+                android:fontFamily="@font/montserrat"
+                android:text="MakanGuys"
+                android:textColor="#E82828"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="352dp"
+                android:layout_height="21dp"
+                android:layout_marginTop="5dp"
+                android:height="43dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Makan murah dan mudah dengan MakanGuys aja!"
+                android:textColor="#222121"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="62dp"
+                android:layout_height="21dp"
+                android:layout_marginTop="20dp"
+                android:height="43dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Email"
+                android:textColor="#222121"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editEmailLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/inputbox"
+                android:ems="10"
+                android:fontFamily="@font/montserrat"
+                android:hint="Masukan Email"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="20dp" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="21dp"
+                android:layout_marginTop="0dp"
+                android:height="43dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Kata Sandi"
+                android:textColor="#222121"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editEmailLogin3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/inputbox"
+                android:ems="10"
+                android:fontFamily="@font/montserrat"
+                android:hint="Masukan Kata Sandi"
+                android:inputType="textWebPassword"
+                android:paddingLeft="20dp"
+                android:textAlignment="viewStart" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="136dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/red"
+                    android:text="Login"
+                    android:textAllCaps="false"
+                    app:cornerRadius="10dp" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="218dp"
+                    android:layout_height="19dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:height="43dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Lupa Kata Sandi?"
+                    android:textAlignment="textEnd"
+                    android:textColor="#606C73"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="21dp"
+                android:layout_marginTop="10dp"
+                android:height="43dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Belum punya akun?"
+                android:textAlignment="viewEnd"
+                android:textColor="#606C73"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Daftar Sekarang!"
+                android:textAlignment="viewEnd"
+                android:textColor="#0098EE" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/headerlogin"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/footerlogin" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
