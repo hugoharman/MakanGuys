@@ -63,7 +63,7 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="62dp"
+                android:layout_width="match_parent"
                 android:layout_height="21dp"
                 android:layout_marginTop="20dp"
                 android:height="43dp"
@@ -98,7 +98,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editEmailLogin3"
+                android:id="@+id/editNomorDaftar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -106,7 +106,32 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat"
                 android:hint="Masukan Nomor Telepon"
-                android:inputType="textWebPassword"
+                android:inputType="number"
+                android:paddingLeft="20dp"
+                android:textAlignment="viewStart" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="21dp"
+                android:layout_marginTop="0dp"
+                android:height="43dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Alamat"
+                android:textColor="#222121"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editAlamatDaftar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/inputbox"
+                android:ems="10"
+                android:fontFamily="@font/montserrat"
+                android:hint="Masukan Alamat"
+                android:inputType="text"
                 android:paddingLeft="20dp"
                 android:textAlignment="viewStart" />
 
@@ -123,7 +148,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editEmailLogin4"
+                android:id="@+id/editEmailForgot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -131,7 +156,7 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat"
                 android:hint="Masukan Email"
-                android:inputType="textWebPassword"
+                android:inputType="textEmailAddress"
                 android:paddingLeft="20dp"
                 android:textAlignment="viewStart" />
 
@@ -148,7 +173,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editEmailLogin7"
+                android:id="@+id/editPasswordDaftar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -160,13 +185,38 @@
                 android:paddingLeft="20dp"
                 android:textAlignment="viewStart" />
 
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="21dp"
+                android:layout_marginTop="0dp"
+                android:height="43dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Kata Sandi Konfirmasi"
+                android:textColor="#222121"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editPasswordKonfirmasiDaftar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/inputbox"
+                android:ems="10"
+                android:fontFamily="@font/montserrat"
+                android:hint="Masukan Konfirmasi Kata Sandi"
+                android:inputType="textWebPassword"
+                android:paddingLeft="20dp"
+                android:textAlignment="viewStart" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/buttonReset"
                     android:layout_width="136dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -190,7 +240,7 @@
                 android:textSize="15dp" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/txtViewLoginForgot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"

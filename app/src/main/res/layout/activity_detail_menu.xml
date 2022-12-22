@@ -5,17 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
-    tools:context=".DetailBuku">
+    tools:context=".DetailMenu">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/img_menu"
+            android:id="@+id/gambarMenu_detail"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:background="@drawable/tahugimbal" />
+            android:layout_height="match_parent"
+            android:background="@drawable/tahugimbal"
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/back_btn"
@@ -26,19 +27,22 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
-            android:src="@drawable/back_btn_white" />
+            android:src="@drawable/back_btn_white"
+            app:tint="@color/dark_gray" />
+
+
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/img_menu"
+            android:layout_below="@+id/gambarMenu_detail"
             android:layout_marginTop="20dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp">
 
             <TextView
-                android:id="@+id/namaMenu"
+                android:id="@+id/namaItem_cart"
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:text="Tahu Gimbal"
@@ -51,18 +55,17 @@
                 android:id="@+id/txtHarga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/namaMenu"
-                android:fontFamily="@font/inter_regular"
+                android:layout_below="@id/namaItem_cart"
                 android:text="Harga :"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
 
             <TextView
-                android:id="@+id/hargaMenu"
+                android:id="@+id/hargaMenu_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/namaMenu"
+                android:layout_below="@+id/namaItem_cart"
                 android:layout_toEndOf="@+id/txtHarga"
                 android:paddingStart="10dp"
                 android:text="Rp10.000"
@@ -70,10 +73,10 @@
                 android:textSize="12dp" />
 
             <TextView
-                android:id="@+id/deskripsiMenu"
+                android:id="@+id/deskripsiMenu_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/hargaMenu"
+                android:layout_below="@+id/hargaMenu_detail"
                 android:layout_marginTop="10dp"
                 android:justificationMode="inter_word"
                 android:text="Satu porsi tahu gimbal berisi tahu gorang iris, gimbal udang, telur ceplok, irisan kol mentah, tauge rebus, kerupuk udang kemudian disiram bumbu kacang yang telah dicampur dengan petis udang. Lalu diberi kecap, taburan bawang merah goreng dan daun seledri"
@@ -84,9 +87,8 @@
                 android:id="@+id/txtCatatan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/deskripsiMenu"
+                android:layout_below="@+id/deskripsiMenu_detail"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/inter_regular"
                 android:text="Catatan untuk pesanan"
                 android:textColor="@color/black"
                 android:textSize="12dp"
@@ -111,7 +113,7 @@
                 android:textSize="14sp" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnTambahKeranjang"
+                android:id="@+id/btnTambahKeranjang_menu"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/editCatatan"

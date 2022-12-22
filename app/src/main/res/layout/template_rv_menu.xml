@@ -10,6 +10,7 @@
     app:cardElevation="8dp">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/history"
@@ -18,18 +19,18 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/gambarMenu"
+            android:id="@+id/gambarItem_cart"
             android:layout_width="125dp"
             android:layout_height="130dp"
             android:src="@drawable/tahugimbal" />
 
         <LinearLayout
-            android:layout_width="262dp"
-            android:layout_height="129dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/namaMenu"
+                android:id="@+id/namaItem_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -66,7 +67,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/hargaMakananMenu"
+                    android:id="@+id/hargaItem_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
@@ -74,24 +75,27 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="120dp"
-                android:layout_marginTop="5dp"
 
-                android:orientation="horizontal"
-                android:padding="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/parent_layout"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnTambahKeranjang"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:id="@+id/btnTambahKeranjang_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_btn"
                     android:text="Tambahkan Keranjang"
+                    android:textAlignment="center"
                     android:textAllCaps="false"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp" />
             </LinearLayout>
+
 
         </LinearLayout>
     </LinearLayout>

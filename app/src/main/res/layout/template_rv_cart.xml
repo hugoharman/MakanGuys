@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    id="@+id/cv_buku_pencarian"
+    id="@+id/cv_cart"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
@@ -18,7 +18,7 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/gambarMenu"
+            android:id="@+id/gambarItem_cart"
             android:layout_width="125dp"
             android:layout_height="130dp"
             android:src="@drawable/tahugimbal" />
@@ -29,7 +29,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/namaMenu"
+                android:id="@+id/namaItem_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -66,42 +66,61 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/hargaMakananMenu"
+                    android:id="@+id/hargaItem_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:text="10.000"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="140dp"
-                android:layout_marginTop="20dp"
 
+
+                android:layout_marginLeft="10dp"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
-                <TextView
+                <Button
+                    android:id="@+id/btnDec_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="Jumlah :"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:background="@null"
+                    android:backgroundTint="@color/red"
+                    android:padding="4dp"
+                    android:text="-"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/jumlahItem"
+                    android:id="@+id/jumlahItem_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
+                    android:background="@null"
+                    android:minWidth="20dp"
+                    android:padding="4dp"
                     android:text="1"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/btnInc_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@color/red"
+                    android:padding="4dp"
+                    android:text="+"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
             </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

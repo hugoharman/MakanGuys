@@ -4,22 +4,66 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.257" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/back_btn_white.xml" value="0.197" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/bg_book.xml" value="0.197" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/bg_book_desc.xml" value="0.1685" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/bg_btn.xml" value="0.1935" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/br_100.xml" value="0.197" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/cs.xml" value="0.197" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/form.xml" value="0.197" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/history.xml" value="0.2155" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.253" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.1715" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.257" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.257" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_cart.xml" value="0.197" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_daftarmenu.xml" value="0.197" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_history.xml" value="0.175" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_home.xml" value="0.1725" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_launcher_background.xml" value="0.257" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.107" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_pesananhistory.xml" value="0.197" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_profile.xml" value="0.175" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_search.xml" value="0.1525" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_settings.xml" value="0.137" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_star.xml" value="0.151" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/ic_wave.xml" value="0.2105" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/lock.xml" value="0.175" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/logout.xml" value="0.175" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/pen.xml" value="0.1685" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/red_border.xml" value="0.253" />
-        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_detail_menu.xml" value="0.2357207615593835" />
-        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_login.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/rounded_button.xml" value="0.1755" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/rounded_button_red.xml" value="0.152" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/drawable/status.xml" value="0.137" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_detail_alamat_resto.xml" value="0.16502778965369816" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_detail_alamat_resto2.xml" value="0.15348439504061565" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_detail_menu.xml" value="0.22" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_detail_menu2.xml" value="0.16802052159042324" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_detail_resto.xml" value="0.22" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_detail_resto_menu.xml" value="0.15555555555555556" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_edit_user.xml" value="0.14270789803593814" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_fragment_history.xml" value="0.22" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_mainfood.xml" value="0.33" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_reset_password.xml" value="0.22" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_signup.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/activity_splash_screen.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/bottom_navbar_items.xml" value="0.2357207615593835" />
-        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/template_rv_cart.xml" value="0.2357207615593835" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/fragment_cart.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/fragment_history.xml" value="0.21169537624660018" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/fragment_homepage.xml" value="0.21169537624660018" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/input_number_layout.xml" value="0.6" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/preview_cart_layout.xml" value="0.5" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/template_rv_cart.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/template_rv_historyorder.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/template_rv_main.xml" value="0.22" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/template_rv_menu.xml" value="0.25" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/template_rv_resto.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/layout/template_rv_utama.xml" value="0.2357207615593835" />
         <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/menu/bottom_navbar_items.xml" value="0.2975630611372381" />
+        <entry key="..\:/Users/Hugo/Desktop/Productivity/Kuliah/Semester3/PPB/MakanGuys/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1725" />
       </map>
     </option>
   </component>
