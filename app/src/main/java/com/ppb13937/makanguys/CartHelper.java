@@ -213,6 +213,15 @@ public class CartHelper {
         editor.apply();
     }
 
+    public static int getExistingRestoID(Context context){
+        if(!isSharedPreferencesExist(context)){
+            return -1;
+        }
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART,Context.MODE_PRIVATE);
+        int idResto = sharedPreferences.getInt("idResto",-1);
+        return idResto;
+    }
+
     public static void updateCart(Context context,int idResto, int idItem, int amountItem,ArrayList<Cart> listCart){
         if(!isSharedPreferencesExist(context)) {
             saveCart(context,idResto,idItem,amountItem,listCart);

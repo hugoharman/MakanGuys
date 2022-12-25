@@ -19,9 +19,6 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,8 +31,6 @@ import com.ppb13937.makanguys.apiclient.APIClient;
 import com.ppb13937.makanguys.apiclient.Resto;
 import com.ppb13937.makanguys.apiclient.MakanGuysInterface;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,16 +49,11 @@ public class FragmentHomepage extends Fragment {
     AdapterResto adapter;
 
     RecyclerView rv_mu;
-    private ArrayList<String> array_gambar;
-    private ArrayList<String> array_rating;
-    AdapterHomepage adapterHomepage;
     private Context mContext;
-    TextView rating;
     ViewFlipper viewFlipper;
 
     //user data
     private FirebaseUser user;
-    private DatabaseReference reference;
     private String userID;
 
 
@@ -118,21 +108,18 @@ public class FragmentHomepage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
-        //Flipper
-        int images[] = {R.drawable.tahugimbal, R.drawable.pecellele, R.drawable.ayamgeprekkeju};
 
+        // Set up view flipper
+        int images[] = {R.drawable.tahugimbal, R.drawable.ayamgeprekkeju};
         viewFlipper = view.findViewById(R.id.flipper_dashboard);
-
-        for (int i = 0; i < images.length; i++) {
-            fliverImages(images[i]);
-        }
-        for (int image : images)
+        for (int image : images) {
             fliverImages(image);
+        }
 
-        //user data
+        // Set up greeting for user
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();
-        final TextView greetUser = (TextView) view.findViewById(R.id.tv_nama);
+        final TextView greetUser = view.findViewById(R.id.tv_nama);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         Query checkUserDatabase = reference.child(userID);
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -141,9 +128,9 @@ public class FragmentHomepage extends Fragment {
                 String usernameFromDB = snapshot.child("name").getValue(String.class);
                 if (usernameFromDB != null) {
                     String namaUser = usernameFromDB;
-                    greetUser.setText("Halo, " + namaUser + "!");
+                    greetUser.setText("Selamat Datang, " + namaUser + "!");
                 } else {
-                    greetUser.setText("Halo, !");
+                    greetUser.setText("Selamat Datang!");
                 }
             }
 
@@ -153,28 +140,16 @@ public class FragmentHomepage extends Fragment {
             }
         });
 
-        //List Buku
+        // Set up menu recycler view
         rv_mu = view.findViewById(R.id.rv_menu);
-       // rv_mu.hasFixedSize();
-        //rv_mu.setLayoutManager(new LinearLayoutManager(mContext));
-
         LinearLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
         rv_mu.setLayoutManager(layoutManager);
-       // rv_mu.setAdapter(adapterHomepage);
-        rating = view.findViewById(R.id.hargaItem_cart);
+
         getAllResto();
-        //getData();
 
         return view;
     }
 
-    void initializeArray() {
-        array_gambar = new ArrayList<String>();
-        array_rating = new ArrayList<String>();
-
-        array_gambar.clear();
-        array_rating.clear();
-    }
 
     private void getAllResto(){
         Call<List<Resto>> getResto = makanGuysInterface.getResto();
@@ -182,8 +157,6 @@ public class FragmentHomepage extends Fragment {
             @Override
             public void onResponse(Call<List<Resto>> call, Response<List<Resto>> response) {
                 ArrayList<Resto> listResto = (ArrayList<Resto>) response.body();
-                //Log.d("list_resto: ", response.raw().toString());
-                //Log.d("list_resto",listResto.get(0).getName());
 
                 adapter = new AdapterResto(listResto);
                 rv_mu.setAdapter(adapter);
@@ -194,51 +167,6 @@ public class FragmentHomepage extends Fragment {
                 Log.e("error_resto: ", t.getMessage());
             }
         });
-    }
-
-    public void getData() {
-        Log.d("test","get data");
-        initializeArray();
-        AndroidNetworking.get("http://10.0.2.2/makanguys/menu.php")
-                .setTag("Get Data")
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Log.d("hi","response!");
-                            Boolean status = response.getBoolean("status");
-                            if (status) {
-                                JSONArray ja = response.getJSONArray("result");
-                                Log.d("respon", "" + ja);
-                                for (int i = 0; i < ja.length(); i++) {
-                                    JSONObject jo = ja.getJSONObject(i);
-
-                                    array_gambar.add(jo.getString("gambar_buku"));
-                                    array_rating.add(jo.getString("rating"));
-                                }
-                                adapterHomepage = new AdapterHomepage(mContext, array_gambar, array_rating);
-                                rv_mu.setAdapter(adapterHomepage);
-                            } else {
-                                Toast.makeText(mContext, "Failed to retrieve data", Toast.LENGTH_SHORT).show();
-                                adapterHomepage = new AdapterHomepage(mContext, array_gambar, array_rating);
-                                rv_mu.setAdapter(adapterHomepage);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.d("test","Exception error ygy");
-                            Toast.makeText(mContext, "exception error : "+e, Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        Toast.makeText(mContext, String.valueOf(anError), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
     }
 
     public void fliverImages(int images) {

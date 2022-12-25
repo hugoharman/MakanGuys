@@ -2,6 +2,7 @@ package com.ppb13937.makanguys;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,11 +40,8 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (android.os.Build.VERSION.SDK_INT > 9)
-        {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewHolder holder = new ViewHolder(inflater.inflate(R.layout.template_rv_cart, parent, false));
@@ -60,9 +59,7 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
         Log.d("itemID", String.valueOf(keranjang.getItemID()));
         Log.d("getRestoMenu", "itemAmount: " + keranjang.getAmount());
         holder.jumlahItem.setText(String.valueOf(keranjang.getAmount()));
-
         try {
-            // Make the synchronous API call
             Response<List<MenuMakanan>> response = getMenu.execute();
             ArrayList<MenuMakanan> listKeranjang = (ArrayList<MenuMakanan>) response.body();
             Log.d("response", "onBindViewHolder: " + response.body());
@@ -71,19 +68,88 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
             holder.namaItem.setText(nama);
             holder.hargaItem.setText(String.valueOf(harga));
 
-            //set imageItem from API
-            try {
-                URL url = new URL(listKeranjang.get(0).getImage_url());
-                Glide.with(context)
-                        .load(url)
-                        .into(holder.imageItem);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
+            if (listKeranjang.get(0).getImage_url() != null && !listKeranjang.get(0).getImage_url().equals("")) {
+                        try {
+                            URL url = new URL(listKeranjang.get(0).getImage_url());
+                            Glide.with(context)
+                                    .load(url)
+                                    .into(holder.imageItem);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
+        holder.btnInc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int jumlah = Integer.parseInt(holder.jumlahItem.getText().toString());
+                jumlah++;
 
+                holder.jumlahItem.setText(String.valueOf(jumlah));
+                if (jumlah != 0 ) {
+                    if(CartHelper.isSharedPreferencesExist(context)){
+                        Log.d("menu value","Shared Preferences exist!");
+                        if(CartHelper.getItemAmount(context,keranjang.getItemID()) != jumlah){
+                            //update shared preference
+                            DetailRestoMenu.updateCart(context,keranjang.getIDResto(),keranjang.getItemID(),jumlah);
+                            Log.d("menu value","Shared Preferences updated!");
+                        }
+                    }
+                    else
+                    {
+                        Log.d("menu value","Shared Preferences doesnt exist!");
+                    }
+                }
+
+            }
+        });
+        holder.btnDec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int jumlah = Integer.parseInt(holder.jumlahItem.getText().toString());
+
+                if (jumlah != 0 ) {
+                    jumlah--;
+                    holder.jumlahItem.setText(String.valueOf(jumlah));
+                    if(CartHelper.isSharedPreferencesExist(context)){
+                        Log.d("menu value","Shared Preferences exist!");
+                        if(CartHelper.getItemAmount(context,keranjang.getItemID()) != jumlah){
+                            //update shared preference
+                            DetailRestoMenu.updateCart(context,keranjang.getIDResto(),keranjang.getItemID(),jumlah);
+                            Log.d("menu value","Shared Preferences updated!");
+                        }
+                    }else{
+                        Log.d("menu value","Shared Preferences doesnt exist!");
+                    }
+                    if (CartHelper.getItemAmount(context, keranjang.getItemID()) == 0) {
+                        Log.d("menu value", "remove from sharedpreferences");
+                        DetailRestoMenu.removeFromCart(context, keranjang.getIDResto(), keranjang.getItemID());
+                    }
+                    if(CartHelper.getItemAmount(context,keranjang.getItemID()) == 0) {
+                        Intent intent = new Intent(context, MainActivity.class);
+                        intent.putExtra("fragment", "cart");
+                        context.startActivity(intent);
+                    }
+                }else {
+                    if(CartHelper.isSharedPreferencesExist(context)) {
+                        Log.d("menu value", "Shared Preferences exist!");
+                        if (CartHelper.getItemAmount(context, keranjang.getItemID()) == 0) {
+                            Log.d("menu value", "remove from sharedpreferences");
+                            DetailRestoMenu.removeFromCart(context, keranjang.getIDResto(), keranjang.getItemID());
+                        }
+                        if(CartHelper.getItemAmount(context,keranjang.getItemID()) == 0) {
+                            Intent intent = new Intent(context, MainActivity.class);
+                            intent.putExtra("fragment", "cart");
+                            context.startActivity(intent);
+                        }
+                    }
+                }
+
+            }
+        });
 
 
         //holder.txtCurhat.setText(resto.getAddress());

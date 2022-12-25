@@ -8,7 +8,7 @@
     tools:context=".EditUser">
 
     <ImageView
-        android:id="@+id/back_btn"
+        android:id="@+id/imageBack"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="16dp"
@@ -29,11 +29,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
             android:layout_marginTop="80dp"
-            android:src="@drawable/icon_app" />
+            android:height="43dp"
+            android:fontFamily="@font/montserrat"
+            android:text="MakanGuys"
+            android:textColor="#E82828"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,10 +75,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="2dp"
             android:background="@drawable/form"
-            android:inputType="text"
             android:elevation="4dp"
             android:ems="10"
-            android:hint="Nama"
+            android:hint="Nama Lengkap"
+            android:inputType="text"
             android:padding="16dp"
             android:textColor="@color/black"
             android:textColorHint="#808080"
@@ -87,10 +93,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="2dp"
             android:background="@drawable/form"
-            android:inputType="number"
             android:elevation="4dp"
             android:ems="10"
-            android:hint="Telp"
+            android:hint="Nomor Telpon"
+            android:inputType="number"
             android:padding="16dp"
             android:textColor="@color/black"
             android:textColorHint="#808080"

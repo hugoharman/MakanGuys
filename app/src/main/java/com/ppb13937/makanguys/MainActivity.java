@@ -1,36 +1,35 @@
 package com.ppb13937.makanguys;
 
-import androidx.appcompat.app.AlertDialog;
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ppb13937.makanguys.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    ActivityMainBinding activityMainBinding;
+    private ActivityMainBinding activityMainBinding;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
         replaceFragment(new FragmentHomepage());
+
         Intent intent = getIntent();
         String message = intent.getStringExtra("fragment");
         if(message != null){
             if(message.equals("cart")){
-                activityMainBinding.bottomNavigationView.setSelectedItemId(R.id.cari);
+                activityMainBinding.bottomNavigationView.setSelectedItemId(R.id.cart);
                 replaceFragment(new FragmentCart());
             }
             else if(message.equals("history")){
@@ -38,33 +37,13 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new FragmentHistory());
             }
         }
-        /*
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user.isEmailVerified()) {
-            replaceFragment(new FragmentHomepage());
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Untuk Menggunakan E-Library, Anda diharuskan untuk melakukan verifikasi Email terlebih dahulu\n\n" +
-                            "Klik Oke untuk mendapatkan Email Verifikasi")
-                    .setTitle("Verifikasi Email");
-            builder.setPositiveButton("Oke", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    user.sendEmailVerification();
-                    FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    Toast.makeText(MainActivity.this, "Silahkan cek email anda untuk verifikasi!", Toast.LENGTH_LONG).show();
-                }
-            });
-            //alertDialogMain = builder.create();
-            //alertDialogMain.show();
-        }
-        */
+
         activityMainBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.menu_utama:
                     replaceFragment(new FragmentHomepage());
                     break;
-                case R.id.cari:
+                case R.id.cart:
                     replaceFragment(new FragmentCart());
                     break;
                 case R.id.riwayat:
@@ -77,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
-
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -89,6 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        //Do nothing
     }
 }

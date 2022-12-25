@@ -20,9 +20,6 @@
             android:name=".DetailMenu"
             android:exported="false" />
         <activity
-            android:name=".DetailAlamatResto"
-            android:exported="false" />
-        <activity
             android:name=".DetailRestoMenu"
             android:exported="false" />
         <activity

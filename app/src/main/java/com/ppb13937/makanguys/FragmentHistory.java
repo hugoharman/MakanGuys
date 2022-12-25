@@ -1,6 +1,7 @@
 package com.ppb13937.makanguys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,7 +36,7 @@ public class FragmentHistory extends Fragment implements OrderHistoryDatabase.Or
     public static ArrayList<History> listHistory;
     MakanGuysInterface makanGuysInterface;
     AdapterHistory adapter;
-
+    public boolean isHistoryLoaded = false;
     RecyclerView rv_history;
     AdapterHomepage adapterHomepage;
     private Context mContext;
@@ -94,6 +95,7 @@ public class FragmentHistory extends Fragment implements OrderHistoryDatabase.Or
         listHistory = historyList;
         Log.d("History", "onOrderHistoryLoaded: " + listHistory.size());
         // Use the listHistory variable here
+        isHistoryLoaded = true;
 
     }
 
@@ -101,12 +103,19 @@ public class FragmentHistory extends Fragment implements OrderHistoryDatabase.Or
     public void onOrderHistoryLoadFailed(String error) {
         Log.d("FragmentHistory", error);
         // Show an error message or do something else
+        isHistoryLoaded = true;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         OrderHistoryDatabase database = new OrderHistoryDatabase();
         database.loadOrderHistory(this);
+        //make sure loadorder history first
+        if(!isHistoryLoaded && listHistory == null){
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            intent.putExtra("fragment", "history");
+            startActivity(intent);
+        }
 
         makanGuysInterface = APIClient.getClient().create(MakanGuysInterface.class);
 

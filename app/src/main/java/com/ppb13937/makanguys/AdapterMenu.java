@@ -1,8 +1,11 @@
 package com.ppb13937.makanguys;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,8 +28,7 @@ import java.util.ArrayList;
 public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
 
     ArrayList<MenuMakanan> listMenu;
-
-    public AdapterMenu(ArrayList<MenuMakanan> listMenu) {
+    public AdapterMenu(ArrayList<MenuMakanan> listMenu, String restoName, String Alamat) {
         this.listMenu = listMenu;
     }
 
@@ -69,8 +71,40 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
         holder.btnTambahKeranjang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CartHelper.loadCart(context);
-                setupInputNumberLayout(context, holder, 1,menu.getId(),menu.getRestoid());
+                Log.d("getExistingRestoId", String.valueOf(CartHelper.getExistingRestoID(context)));
+                Log.d("getRestoId", String.valueOf(menu.getRestoid()));
+                if(CartHelper.getExistingRestoID(context) == menu.getRestoid() || CartHelper.getExistingRestoID(context) == -1) {
+                    DetailRestoMenu.loadCart(context);
+                    setupInputNumberLayout(context, holder, 1,menu.getId(),menu.getRestoid());
+                    CartHelper.loadCart(context);
+
+                }else{
+                    //show dialog to clear cart
+                    Log.d("show dialog", "show dialog");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Peringatan");
+                    builder.setMessage("Anda sudah memilih menu dari restoran lain. Apakah anda ingin menghapus menu dari restoran sebelumnya?");
+
+                    builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            CartHelper.clearCart(context);
+                            DetailRestoMenu.loadCart(context);
+                            setupInputNumberLayout(context, holder, 1,menu.getId(),menu.getRestoid());
+                            CartHelper.loadCart(context);
+                        }
+                    });
+                    //tidak
+                    builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.show();
+
+                }
+
             }
         });
 
@@ -80,6 +114,8 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
             public void onClick(View v) {
                 //Check Detail Menu
                 Intent intent = new Intent(context, DetailMenu.class);
+                intent.putExtra("itemID", menu.getId());
+                intent.putExtra("restoID", menu.getRestoid());
                 intent.putExtra("namaMenu", menu.getName());
                 intent.putExtra("gambarMenu", menu.getImage_url());
                 intent.putExtra("deskripsiMenu", menu.getDescription());
@@ -109,6 +145,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
 
         // Set the value of the input number EditText to 1
         inputNumber.setText(String.valueOf(amountItem));
+
         if(CartHelper.isSharedPreferencesExist(context)){
             Log.d("menu value","Shared Preferences exist!");
             if(CartHelper.getItemAmount(context,itemid) != amountItem){
@@ -123,23 +160,42 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
         btnIncrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int value = Integer.parseInt(inputNumber.getText().toString());
-                value++;
-                inputNumber.setText(String.valueOf(value));
-
-                if (value != 0 ) {
-                    if(CartHelper.isSharedPreferencesExist(context)){
-                        Log.d("menu value","Shared Preferences exist!");
-                        if(CartHelper.getItemAmount(context,itemid) != value){
-                            //update shared preference
-                            DetailRestoMenu.updateCart(context,idresto,itemid,value);
-                            Log.d("menu value","Shared Preferences updated!");
-                        }
-                    }else{
-                        Log.d("menu value","Shared Preferences doesnt exist!");
+                if(CartHelper.getExistingRestoID(context) == idresto) {
+                    Log.d("getExistingRestoID", String.valueOf(CartHelper.getExistingRestoID(context)));
+                    Log.d("menu value", "Shared Preferences exist!");
+                    int value = Integer.parseInt(inputNumber.getText().toString());
+                    value++;
+                    inputNumber.setText(String.valueOf(value));
+                    if (CartHelper.getItemAmount(context, itemid) != value) {
+                        //update shared preference
+                        DetailRestoMenu.updateCart(context, idresto, itemid, value);
+                        Log.d("menu value", "Shared Preferences updated!");
                     }
+                }else{
+                    //show dialog to clear cart
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Peringatan");
+                    builder.setMessage("Anda sudah memilih menu dari restoran lain. Apakah anda ingin menghapus menu dari restoran sebelumnya?");
+
+                    builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //clear cart
+
+                            CartHelper.clearCart(context);
+                            //update shared preference
+                            int value = Integer.parseInt(inputNumber.getText().toString());
+                            DetailRestoMenu.saveCart(context, idresto, itemid, value);
+                            value++;
+                            inputNumber.setText(String.valueOf(value));
+                            if (CartHelper.getItemAmount(context, itemid) != value) {
+                                //update shared preference
+                                DetailRestoMenu.updateCart(context, idresto, itemid, value);
+                                Log.d("menu value", "Shared Preferences updated!");
+                            }
+                        }
+                    });
                 }
-//                Log.d("testgg",inputNumber.getText().toString());
                 DetailRestoMenu.loadCart(context);
 
             }

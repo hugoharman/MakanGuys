@@ -31,11 +31,6 @@ public class AdapterResto extends RecyclerView.Adapter<AdapterResto.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (android.os.Build.VERSION.SDK_INT > 9)
-        {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewHolder holder = new ViewHolder(inflater.inflate(R.layout.template_rv_resto, parent, false));
@@ -66,10 +61,10 @@ public class AdapterResto extends RecyclerView.Adapter<AdapterResto.ViewHolder> 
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailRestoMenu.class);
                 intent.putExtra("idResto",resto.getId());
+                intent.putExtra("locationResto",resto.getLocation());
                 intent.putExtra("namaResto", resto.getName());
                 intent.putExtra("alamatResto", resto.getAddress());
                 context.startActivity(intent);
-
             }
         });
 

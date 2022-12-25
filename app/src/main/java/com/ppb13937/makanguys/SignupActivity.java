@@ -37,7 +37,7 @@ public class SignupActivity extends AppCompatActivity {
         editNomorTelephone = findViewById(R.id.editNomorDaftar);
         editPassword = findViewById(R.id.editPasswordDaftar);
         editPasswordKonfirmasi = findViewById(R.id.editPasswordKonfirmasiDaftar);
-        btnDaftar = findViewById(R.id.buttonReset);
+        btnDaftar = findViewById(R.id.btnResetPassword);
         txtLogin = findViewById(R.id.txtViewLoginForgot);
         editAlamat = findViewById(R.id.editAlamatDaftar);
         mAuth = FirebaseAuth.getInstance();
@@ -59,22 +59,6 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registerUser();
-                /*
-                database =  FirebaseDatabase.getInstance();
-                reference  =  database.getReference("users");
-                String username = editUsername.getText().toString();
-                String name = editNama.getText().toString();
-                String email = editEmail.getText().toString();
-                String phoneNumber = editNomorTelephone.getText().toString();
-                String password = editPassword.getText().toString();
-
-                HelperClass helperClass = new HelperClass(username,name,email,password,phoneNumber);
-                reference.child(name).setValue(helperClass);
-
-                Toast.makeText(SignupActivity.this,"Akun berhasil didaftarkan!",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
-                startActivity(intent);
-                */
             }
         });
     }
@@ -84,27 +68,63 @@ public class SignupActivity extends AppCompatActivity {
         String email = editEmail.getText().toString();
         String phoneNumber = editNomorTelephone.getText().toString();
         String password = editPassword.getText().toString();
+        String secondaryPassword = editPasswordKonfirmasi.getText().toString();
         String address = editAlamat.getText().toString();
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            HelperClass helperClass = new HelperClass(name,email,password,phoneNumber,address);
-                            FirebaseDatabase.getInstance().getReference("users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(helperClass).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            showMainActivity();
-                                        }
-                                    });
-                        } else {
-                            Toast.makeText(SignupActivity.this,"Auth failed!",
-                            Toast.LENGTH_SHORT).show();
+        if(name.isEmpty()){
+            editNama.setError("Nama tidak boleh kosong");
+            editNama.requestFocus();
+            return;
+        }
+        if(email.isEmpty()){
+            editEmail.setError("Email tidak boleh kosong");
+            editEmail.requestFocus();
+            return;
+        }
+        if(phoneNumber.isEmpty()){
+            editNomorTelephone.setError("Nomor telepon tidak boleh kosong");
+            editNomorTelephone.requestFocus();
+            return;
+        }
+        if(address.isEmpty()){
+            editAlamat.setError("Alamat tidak boleh kosong");
+            editAlamat.requestFocus();
+            return;
+        }
+        if(password.isEmpty()){
+            editPassword.setError("Password tidak boleh kosong");
+            editPassword.requestFocus();
+            return;
+        }
+        if(secondaryPassword.isEmpty()){
+            editPasswordKonfirmasi.setError("Konfirmasi password tidak boleh kosong");
+            editPasswordKonfirmasi.requestFocus();
+            return;
+        }
+        if(password.equals(secondaryPassword)) {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                HelperClass helperClass = new HelperClass(name, email, phoneNumber, address);
+                                FirebaseDatabase.getInstance().getReference("users")
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(helperClass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                showMainActivity();
+                                            }
+                                        });
+                            } else {
+                                Toast.makeText(SignupActivity.this, "Auth failed!",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }else{
+            Toast.makeText(SignupActivity.this, "Password tidak sama!",
+                    Toast.LENGTH_SHORT).show();
+        }
 
     }
 

@@ -36,13 +36,13 @@ public class AdapterHomepage extends RecyclerView.Adapter<AdapterHomepage.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView rating;
-        public ImageView gambar_buku;
+        public ImageView gambar_resto;
         public CardView cv_menu_utama;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             cv_menu_utama = itemView.findViewById(R.id.cv_menu_utama);
-            gambar_buku = itemView.findViewById(R.id.gambarItem_cart);
+            gambar_resto = itemView.findViewById(R.id.gambarItem_cart);
             rating = itemView.findViewById(R.id.hargaItem_cart);
         }
     }
@@ -51,15 +51,15 @@ public class AdapterHomepage extends RecyclerView.Adapter<AdapterHomepage.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         TextView rating = holder.rating;
-        ImageView gambar_buku = holder.gambar_buku;
-        Glide.with(holder.itemView.getContext()).load(array_gambar.get(position)).into(holder.gambar_buku);
+        ImageView gambar_resto = holder.gambar_resto;
+        Glide.with(holder.itemView.getContext()).load(array_gambar.get(position)).into(holder.gambar_resto);
         rating.setText(array_rating.get(position));
-        gambar_buku.setOnClickListener(new View.OnClickListener() {
+        gambar_resto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(gambar_buku.getContext(), DetailRestoMenu.class);
+                Intent intent = new Intent(gambar_resto.getContext(), DetailRestoMenu.class);
                 intent.putExtra("link_gambar", array_gambar.get(position));
-                gambar_buku.getContext().startActivity(intent);
+                gambar_resto.getContext().startActivity(intent);
             }
         });
     }

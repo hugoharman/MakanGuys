@@ -9,14 +9,24 @@ public class History {
     private ArrayList<Integer> items;
     private ArrayList<Integer> jumlahItems;
     private long tanggalOrder;
+    private int totalHarga;
     // Add this no-argument constructor
 
 
-    public History(int idResto, ArrayList<Integer> items, ArrayList<Integer> jumlahItems, long tanggalOrder) {
+    public History(int idResto, ArrayList<Integer> items, ArrayList<Integer> jumlahItems, long tanggalOrder, int totalHarga) {
         this.idResto = idResto;
         this.items = items;
         this.jumlahItems = jumlahItems;
         this.tanggalOrder = tanggalOrder;
+        this.totalHarga = totalHarga;
+    }
+
+    public int getTotalHarga() {
+        return totalHarga;
+    }
+
+    public void setTotalHarga(int totalHarga) {
+        this.totalHarga = totalHarga;
     }
 
     public int getIdResto() {

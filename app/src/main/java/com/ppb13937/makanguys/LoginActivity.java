@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!validateEmail() || !validatePassword()){
                  }else{
-                   // checkUser();
                     authenticateUser();
                 }
             }
@@ -119,38 +118,5 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-    public void checkUser(){
-        String userUsername = editUsername.getText().toString().trim();
-        String userPassword = editPassword.getText().toString().trim();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query checkUserDatabase = reference.orderByChild("username").equalTo(userUsername);
-        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    editUsername.setError(null);
-                    String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
-                    if(!Objects.equals(passwordFromDB,userPassword)){
-                        editUsername.setError(null);
-                        Intent intent =  new Intent(LoginActivity.this,MainActivity.class);
-                        startActivity(intent);
-                    }
-                    else{
-                        editPassword.setError("Data salah!");
-                        editPassword.requestFocus();
-                    }
-                }else{
-                    editUsername.setError("Akun belum terdaftar!");
-                    editUsername.requestFocus();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 }

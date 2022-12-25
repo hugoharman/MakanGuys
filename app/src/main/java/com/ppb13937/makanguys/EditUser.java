@@ -47,20 +47,19 @@ public class EditUser extends AppCompatActivity {
         progressBarEdit = findViewById(R.id.progressBarUpdate);
         progressBarEdit.setVisibility(View.GONE);
 
-        iv_back = findViewById(R.id.back_btn);
+        iv_back = findViewById(R.id.imageBack);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(EditUser.this, MainActivity.class));
             }
         });
-
-        user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference();
-        userID = user.getUid();
+        DatabaseReference usersRef = reference.child("users");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
 
-
-        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        usersRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -109,9 +108,10 @@ public class EditUser extends AppCompatActivity {
 
         User newUserData = new User(defEmail, newNama, newTelp, newAlamat);
 
-        FirebaseDatabase.getInstance().getReference()
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .setValue(newUserData).addOnCompleteListener(new OnCompleteListener<Void>() {
+        DatabaseReference usersRef = reference.child("users");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        usersRef.child(userID).setValue(newUserData).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){

@@ -104,6 +104,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
         }
         holder.orderList.setText(items.toString());
         Log.d("AdapterHistory","Items: "+items);
+        holder.totalPayment.setText(String.valueOf(history.getTotalHarga()));
         /*
         holder.restoName.setText(history.getNamaResto());
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

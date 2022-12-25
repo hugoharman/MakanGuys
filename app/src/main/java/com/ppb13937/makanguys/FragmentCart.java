@@ -44,6 +44,7 @@ import com.ppb13937.makanguys.apiclient.Resto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,8 +61,11 @@ import retrofit2.Response;
  */
 public class FragmentCart extends Fragment {
     public static ArrayList<Cart> listCart;
-    MakanGuysInterface makanGuysInterface;
+    private static MakanGuysInterface makanGuysInterface;
+    private static TextView totalPembayaran;
+
     AdapterCart adapter;
+    public static int totalHarga = 0;
     LinearLayout ll_order;
     LinearLayout cardview_cart;
     Button btn_checkout;
@@ -124,13 +128,13 @@ public class FragmentCart extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         makanGuysInterface = APIClient.getClient().create(MakanGuysInterface.class);
-
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
         cardview_cart = view.findViewById(R.id.payment_summary_cardview);
         rv_cart = view.findViewById(R.id.rvKeranjang);
         ll_order = view.findViewById(R.id.ll_order);
         namaResto = view.findViewById(R.id.tv_namaresto);
         rv_cart.setLayoutManager(new LinearLayoutManager(mContext));
+        totalPembayaran = view.findViewById(R.id.total_payment);
         loadCart(mContext);
         getAllCart();
         if(listCart.size() == 0){
@@ -155,18 +159,21 @@ public class FragmentCart extends Fragment {
             });
             ArrayList<Integer> items = new ArrayList<>();
             ArrayList<Integer> amountItems = new ArrayList<>();
+
             for (int i = 0; i < listCart.size(); i++) {
                 int itemId = listCart.get(i).getItemID();
                 int quantity = listCart.get(i).getAmount();
                 items.add(itemId);
                 amountItems.add(quantity);
             }
+
             Log.d("listHistory", "Item "  + " = " + items);
 
             long tanggalOrder = System.currentTimeMillis();
             ll_order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     saveOrderHistory(idResto, items, amountItems, tanggalOrder, mContext);
                     CartHelper.clearCart(mContext);
                     Intent intent = new Intent(getContext(), MainActivity.class);
@@ -174,6 +181,8 @@ public class FragmentCart extends Fragment {
                     startActivity(intent);
                 }
             });
+            FragmentCart.totalHarga = 0;
+            FragmentCart.updateTotalPembayaran(mContext);
 
         }
 
@@ -199,9 +208,38 @@ public class FragmentCart extends Fragment {
     }
 
     private void saveOrderHistory(int idResto, ArrayList<Integer> items, ArrayList<Integer> jumlahItem, long tanggalOrder,Context context) {
-      OrderHistoryDatabase.saveOrderHistory(idResto, items, jumlahItem, tanggalOrder, context);
+      OrderHistoryDatabase.saveOrderHistory(idResto, items, jumlahItem, tanggalOrder,totalHarga, context);
     }
+    public static void updateTotalPembayaran(Context context) {
+        loadCart(context);
+        for (int i = 0; i < listCart.size(); i++) {
+            int itemId = listCart.get(i).getItemID();
+            int quantity = listCart.get(i).getAmount();
+            //get price from API
+            try {
+                Call<List<MenuMakanan>> getMenu = makanGuysInterface.getMenu(itemId);
+                getMenu.enqueue(new Callback<List<MenuMakanan>>() {
+                    @Override
+                    public void onResponse(Call<List<MenuMakanan>> call, Response<List<MenuMakanan>> response) {
+                        ArrayList<MenuMakanan> listMenu = (ArrayList<MenuMakanan>) response.body();
+                        String price = listMenu.get(0).getPrice();
+                        int total = Integer.parseInt(price) * quantity;
+                        Log.d("quantity", String.valueOf(quantity));
+                        totalHarga += total;
+                        Log.d("totalHarga", String.valueOf(totalHarga));
+                        totalPembayaran.setText(String.valueOf(totalHarga));
+                    }
 
+                    @Override
+                    public void onFailure(Call<List<MenuMakanan>> call, Throwable t) {
 
+                    }
+                });
+            }
+            catch(Exception e){
+                Log.d("error", e.getMessage());
+            }
+        }
+    }
 
 }

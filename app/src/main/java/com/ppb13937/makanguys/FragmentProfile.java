@@ -34,8 +34,11 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
     private Context mContext;
 
     private ImageButton ib_user;
-    private CardView changePass, customerService, logout;
-
+    private CardView changePass, logout;
+    private TextView emailTextView;
+    private TextView namaTextView;
+    private TextView telpTextView;
+    private TextView alamatTextView;
     //user data
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -85,18 +88,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ib_user = view.findViewById(R.id.btn_edit_user);
-        ib_user.setOnClickListener(this);
-
         changePass = view.findViewById(R.id.cv_ganti_password);
-        changePass.setOnClickListener(this);
-
-        //customerService = view.findViewById(R.id.cv_customer_service);
-        //customerService.setOnClickListener(this);
-
         logout = view.findViewById(R.id.cv_logout);
-        logout.setOnClickListener(this);
-
-        //csDialog = new CSDialog();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Ganti Password Anda ?\nAnda akan menerima Email untuk mereset password anda")
@@ -113,16 +106,23 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
         alertDialog = builder.create();
 
         mAuth = FirebaseAuth.getInstance();
-
-        //user data
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference();
         userID = user.getUid();
-        final TextView email = (TextView) view.findViewById(R.id.tv_profil_email);
-        final TextView nama = (TextView) view.findViewById(R.id.tv_profil_nama);
-        final TextView telp = (TextView) view.findViewById(R.id.tv_profil_telp);
-        final TextView alamat = (TextView) view.findViewById(R.id.tv_profil_alamat);
+        emailTextView = view.findViewById(R.id.tv_profil_email);
+        namaTextView = view.findViewById(R.id.tv_profil_nama);
+        telpTextView = view.findViewById(R.id.tv_profil_telp);
+        alamatTextView = view.findViewById(R.id.tv_profil_alamat);
 
+        ib_user.setOnClickListener(this);
+        changePass.setOnClickListener(this);
+        logout.setOnClickListener(this);
+        retrieveUserData();
+
+        return view;
+    }
+
+    private void retrieveUserData() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         Query checkUserDatabase = reference.child(userID);
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -136,15 +136,15 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
                     String telpUser = userProfile.phonenumber;
                     String alamatUser = userProfile.address;
 
-                    email.setText(emailUser);
-                    nama.setText(namaUser);
-                    telp.setText(telpUser);
-                    alamat.setText(alamatUser);
+                    emailTextView.setText(emailUser);
+                    namaTextView.setText(namaUser);
+                    telpTextView.setText(telpUser);
+                    alamatTextView.setText(alamatUser);
                 } else {
-                    email.setText("");
-                    nama.setText("");
-                    telp.setText("");
-                    alamat.setText("");
+                    emailTextView.setText("");
+                    namaTextView.setText("");
+                    telpTextView.setText("");
+                    alamatTextView.setText("");
                 }
             }
 
@@ -153,10 +153,8 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
                 Toast.makeText(mContext, "Gagal Mengambil Data User", Toast.LENGTH_LONG).show();
             }
         });
-
-
-        return view;
     }
+
 
     @Override
     public void onClick(View view) {
