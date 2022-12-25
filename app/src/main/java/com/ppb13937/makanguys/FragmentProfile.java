@@ -133,7 +133,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
                 if (userProfile != null) {
                     String emailUser = userProfile.email;
                     String namaUser = userProfile.name;
-                    String telpUser = userProfile.phonenumber;
+                    String telpUser = userProfile.phone;
                     String alamatUser = userProfile.address;
 
                     emailTextView.setText(emailUser);

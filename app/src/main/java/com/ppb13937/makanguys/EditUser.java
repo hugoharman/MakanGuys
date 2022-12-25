@@ -67,7 +67,7 @@ public class EditUser extends AppCompatActivity {
                 if (userProfile != null) {
                     String nm = userProfile.name;
                     String em = userProfile.email;
-                    String tlp = userProfile.phonenumber;
+                    String tlp = userProfile.phone;
                     String almt = userProfile.address;
 
                     email.setText(em);
@@ -106,7 +106,7 @@ public class EditUser extends AppCompatActivity {
         String newTelp = telp.getText().toString();
         String newAlamat = alamat.getText().toString();
 
-        User newUserData = new User(defEmail, newNama, newTelp, newAlamat);
+        User newUserData = new User(newAlamat, defEmail, newNama, newTelp);
 
         DatabaseReference usersRef = reference.child("users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
