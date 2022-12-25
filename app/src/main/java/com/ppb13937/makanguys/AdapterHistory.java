@@ -42,11 +42,8 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (android.os.Build.VERSION.SDK_INT > 9)
-        {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewHolder holder = new ViewHolder(inflater.inflate(R.layout.template_rv_historyorder, parent, false));
@@ -61,7 +58,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
         History history = listHistory.get(position);
         int idResto = history.getIdResto();
         Log.d("AdapterHistory","Resto Name: "+history.getIdResto());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, hh:mm a");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, hh:mm a");
         String date = sdf.format(new Date(history.getTanggalOrder()));
         holder.orderDate.setText(date);
         Call<List<Resto>> getResto = makanGuysInterface.getRestoByID(idResto);

@@ -137,7 +137,7 @@ public class FragmentCart extends Fragment {
         totalPembayaran = view.findViewById(R.id.total_payment);
         loadCart(mContext);
         getAllCart();
-        if(listCart.size() == 0){
+        if(listCart == null || listCart.size() == 0){
            cardview_cart.setVisibility(View.INVISIBLE);
            namaResto.setVisibility(View.INVISIBLE);
         }else{
@@ -199,8 +199,8 @@ public class FragmentCart extends Fragment {
     public static void loadCart(Context pls){
         Log.d("hi","load cart");
         listCart = CartHelper.loadCart(pls);
-        if (listCart.size() == 0) {
-            return;
+        if (listCart == null || listCart.size() == 0){
+            listCart = new ArrayList<>();
         }
         else{
             Log.d("hi","data loaded!");

@@ -40,8 +40,11 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewHolder holder = new ViewHolder(inflater.inflate(R.layout.template_rv_cart, parent, false));
@@ -54,15 +57,11 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
         makanGuysInterface = APIClient.getClient().create(MakanGuysInterface.class);
         Context context = holder.itemView.getContext();
         Cart keranjang = listCart.get(position);
-        //get nama item using API
         Call<List<MenuMakanan>> getMenu = makanGuysInterface.getMenu(keranjang.getItemID());
-        Log.d("itemID", String.valueOf(keranjang.getItemID()));
-        Log.d("getRestoMenu", "itemAmount: " + keranjang.getAmount());
         holder.jumlahItem.setText(String.valueOf(keranjang.getAmount()));
         try {
             Response<List<MenuMakanan>> response = getMenu.execute();
             ArrayList<MenuMakanan> listKeranjang = (ArrayList<MenuMakanan>) response.body();
-            Log.d("response", "onBindViewHolder: " + response.body());
             String nama = listKeranjang.get(0).getName();
             int harga = Integer.parseInt(listKeranjang.get(0).getPrice());
             holder.namaItem.setText(nama);
@@ -91,16 +90,9 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
                 holder.jumlahItem.setText(String.valueOf(jumlah));
                 if (jumlah != 0 ) {
                     if(CartHelper.isSharedPreferencesExist(context)){
-                        Log.d("menu value","Shared Preferences exist!");
                         if(CartHelper.getItemAmount(context,keranjang.getItemID()) != jumlah){
-                            //update shared preference
                             DetailRestoMenu.updateCart(context,keranjang.getIDResto(),keranjang.getItemID(),jumlah);
-                            Log.d("menu value","Shared Preferences updated!");
                         }
-                    }
-                    else
-                    {
-                        Log.d("menu value","Shared Preferences doesnt exist!");
                     }
                 }
 
@@ -115,17 +107,11 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
                     jumlah--;
                     holder.jumlahItem.setText(String.valueOf(jumlah));
                     if(CartHelper.isSharedPreferencesExist(context)){
-                        Log.d("menu value","Shared Preferences exist!");
                         if(CartHelper.getItemAmount(context,keranjang.getItemID()) != jumlah){
-                            //update shared preference
                             DetailRestoMenu.updateCart(context,keranjang.getIDResto(),keranjang.getItemID(),jumlah);
-                            Log.d("menu value","Shared Preferences updated!");
                         }
-                    }else{
-                        Log.d("menu value","Shared Preferences doesnt exist!");
                     }
                     if (CartHelper.getItemAmount(context, keranjang.getItemID()) == 0) {
-                        Log.d("menu value", "remove from sharedpreferences");
                         DetailRestoMenu.removeFromCart(context, keranjang.getIDResto(), keranjang.getItemID());
                     }
                     if(CartHelper.getItemAmount(context,keranjang.getItemID()) == 0) {
@@ -135,9 +121,7 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
                     }
                 }else {
                     if(CartHelper.isSharedPreferencesExist(context)) {
-                        Log.d("menu value", "Shared Preferences exist!");
                         if (CartHelper.getItemAmount(context, keranjang.getItemID()) == 0) {
-                            Log.d("menu value", "remove from sharedpreferences");
                             DetailRestoMenu.removeFromCart(context, keranjang.getIDResto(), keranjang.getItemID());
                         }
                         if(CartHelper.getItemAmount(context,keranjang.getItemID()) == 0) {
@@ -152,20 +136,11 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
         });
 
 
-        //holder.txtCurhat.setText(resto.getAddress());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context, resto.getName(), Toast.LENGTH_SHORT).show();
-                /*
-                Intent intent = new Intent(context, DetailRestoMenu.class);
-                intent.putExtra("idResto",resto.getId());
-                // Log.d("adapter",resto.getId());
-                intent.putExtra("namaResto", resto.getName());
-                intent.putExtra("alamatResto", resto.getAddress());
-                context.startActivity(intent);
-                */
+
             }
         });
 

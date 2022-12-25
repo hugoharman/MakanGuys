@@ -147,14 +147,11 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
         inputNumber.setText(String.valueOf(amountItem));
 
         if(CartHelper.isSharedPreferencesExist(context)){
-            Log.d("menu value","Shared Preferences exist!");
             if(CartHelper.getItemAmount(context,itemid) != amountItem){
                 //update shared preference
                 DetailRestoMenu.updateCart(context,idresto,itemid,amountItem);
-                Log.d("menu value","Shared Preferences updated!");
             }
         }else{
-            Log.d("menu value","Shared Preferences doesnt exist!");
             DetailRestoMenu.saveCart(context,idresto,itemid,amountItem);
         }
         btnIncrement.setOnClickListener(new View.OnClickListener() {
@@ -189,9 +186,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
                             value++;
                             inputNumber.setText(String.valueOf(value));
                             if (CartHelper.getItemAmount(context, itemid) != value) {
-                                //update shared preference
                                 DetailRestoMenu.updateCart(context, idresto, itemid, value);
-                                Log.d("menu value", "Shared Preferences updated!");
                             }
                         }
                     });
@@ -210,28 +205,21 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
                 if(value != 0) value--;
                 if (value != 0 ) {
                     if(CartHelper.isSharedPreferencesExist(context)){
-                        Log.d("menu value","Shared Preferences exist!");
                         if(CartHelper.getItemAmount(context,itemid) != value){
                             //update shared preference
                             DetailRestoMenu.updateCart(context,idresto,itemid,value);
-                            Log.d("menu value","Shared Preferences updated!");
                         }
-                    }else{
-                        Log.d("menu value","Shared Preferences doesnt exist!");
                     }
                 }
                 if (value == 0) {
                     parentLayout.removeView(inputNumberLayout);
                     holder.btnTambahKeranjang.setVisibility(View.VISIBLE);
                     if(CartHelper.isSharedPreferencesExist(context)){
-                        Log.d("menu value","Shared Preferences exist!");
                         if(CartHelper.getItemAmount(context,itemid) != value){
                             //remove from cart shared preference
                             DetailRestoMenu.removeFromCart(context,idresto,itemid);
 
                         }
-                    }else{
-                        Log.d("menu value","Shared Preferences doesnt exist!");
                     }
                 }
                 inputNumber.setText(String.valueOf(value));

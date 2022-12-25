@@ -10,7 +10,6 @@ public class History {
     private ArrayList<Integer> jumlahItems;
     private long tanggalOrder;
     private int totalHarga;
-    // Add this no-argument constructor
 
 
     public History(int idResto, ArrayList<Integer> items, ArrayList<Integer> jumlahItems, long tanggalOrder, int totalHarga) {

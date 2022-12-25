@@ -144,14 +144,14 @@ public class DetailRestoMenu extends AppCompatActivity {
     }
     public static void loadCart(Context pls){
         listCart = CartHelper.loadCart(pls);
+        if(listCart == null) return;
         if (listCart.size() == 0) {
+            CartHelper.clearCart(pls);
             ll_checkout.setVisibility(View.GONE);
             if(listCart != null) {
                 listCart.clear();
             }
             return;
-        }
-        else{
         }
         int idResto = listCart.get(0).getIDResto();
         Call<List<Resto>> getResto = makanGuysInterface.getRestoByID(idResto);
@@ -175,7 +175,6 @@ public class DetailRestoMenu extends AppCompatActivity {
             int idItem = listCart.get(i).getItemID();
             int amountItem = listCart.get(i).getAmount();
 
-            //get price of Item using API
             Call<List<MenuMakanan>> getRestoMenu = makanGuysInterface.getRestoMenuByID(idResto);
 
             try {

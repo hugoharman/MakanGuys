@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.ppb13937.makanguys.apiclient.MenuMakanan;
 import com.ppb13937.makanguys.apiclient.Resto;
@@ -15,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CartHelper {
+public class CartHelper implements Serializable {
     private static final String SHARED_PREFS_CART = "makanGuysCart";
     private static final String CART_ITEMS_KEY = "cartItems";
 
@@ -38,171 +40,106 @@ public class CartHelper {
         }
     }
 
-    public static int getItemAmount(Context context,int itemID){
-        if(!isSharedPreferencesExist(context)){
-            return 0;
-        }
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART,Context.MODE_PRIVATE);
-        String data = sharedPreferences.getString("pref_data",null);
-        try {
-            JSONObject mainObj = new JSONObject(data);
-            JSONArray ja = mainObj.getJSONArray("cart");
-            for(int i = 0; i < ja.length(); i++){
-                JSONObject jo = ja.getJSONObject(i);
-                int idItem = jo.getInt("idItem");
-                int amountItem = jo.getInt("amountItem");
-                if(idItem == itemID){
-                    return amountItem;
-                }
+    public static int getItemAmount(Context context, int itemID) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART, Context.MODE_PRIVATE);
+
+        Gson gson = new Gson();
+
+        String json = sharedPreferences.getString("listCart", null);
+
+        Type listType = new TypeToken<List<Cart>>() {}.getType();
+        ArrayList<Cart> listCart = gson.fromJson(json, listType);
+
+        for (Cart cart : listCart) {
+            if (cart.getItemID() == itemID) {
+                return cart.getAmount();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
         return 0;
     }
-    public static ArrayList<Cart> loadCart(Context context) {
-        ArrayList<Cart> listCart = new ArrayList<>();
-        if(!isSharedPreferencesExist(context)){
-            return listCart;
-        }
+        public static ArrayList<Cart> loadCart(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART, Context.MODE_PRIVATE);
 
-        int idResto = sharedPreferences.getInt("idResto", 0);
-        String cartString = sharedPreferences.getString("pref_data", "");
+        Gson gson = new Gson();
 
-        try {
-            JSONObject jsonObj = new JSONObject(cartString);
-            if(jsonObj.has("cart")) {
-                JSONArray jsonArray = jsonObj.getJSONArray("cart");
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    int idItem = jsonObject.getInt("idItem");
-                    int amountItem = jsonObject.getInt("amountItem");
-                    listCart.add(new Cart(idResto, idItem, amountItem));
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String json = sharedPreferences.getString("listCart", null);
+
+        Type listType = new TypeToken<List<Cart>>() {}.getType();
+        ArrayList<Cart> listCart = gson.fromJson(json, listType);
+
         return listCart;
     }
 
-    public static ArrayList<Cart> saveCart(Context context,int idResto, int idItem, int amountItem, ArrayList<Cart> listCart){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART,Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        try {
-            JSONObject jo = new JSONObject();
-            jo.put("idItem", idItem);
-            jo.put("amountItem",amountItem);
-            JSONArray ja = new JSONArray();
-            ja.put(jo);
-            JSONObject mainObj = new JSONObject();
-            mainObj.put("cart", ja);
-            editor.putInt("idResto", idResto);
-            editor.putBoolean("initialized", true);
-            editor.putString("pref_data", mainObj.toString()).commit();
-            if (listCart == null) {
-                listCart = new ArrayList<>();
-            }
-            listCart.add(new Cart(idResto,idItem,amountItem));
 
-        } catch (JSONException json) {
+    public static ArrayList<Cart> saveCart(Context context, int idResto, int idItem, int amountItem, ArrayList<Cart> listCart) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART, Context.MODE_PRIVATE);
 
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        gsonBuilder.setPrettyPrinting();
+
+        Gson gson = gsonBuilder.create();
+
+        if (listCart == null) {
+            listCart = new ArrayList<>();
         }
-        editor.apply();
-        Log.d("hi","data saved!");
+
+        listCart.add(new Cart(idResto, idItem, amountItem));
+
+        String json = gson.toJson(listCart);
+
+        sharedPreferences
+                .edit()
+                .putInt("idResto", idResto)
+                .putBoolean("initialized", true)
+                .putString("listCart", json)
+                .apply();
+
         return listCart;
-
     }
-    public static void removeFromCart(Context context,int idResto, int idItem,ArrayList<Cart> listCart){
-        if(!isSharedPreferencesExist(context)){
-            return;
-        }
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART,Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String jsonHistory = sharedPreferences.getString("pref_data","");
-        try {
-            JSONObject jsonObj = new JSONObject(jsonHistory);
-            JSONArray mJsonArrayProperty = jsonObj.getJSONArray("cart");
-            try {
-                int index = 0;
-                JSONArray ja = new JSONArray();
-                if(mJsonArrayProperty.length() == 0) return;
-                int actualLength = 0;
-                for (;index < mJsonArrayProperty.length(); index++) {
-                    JSONObject mJsonObjectProperty = mJsonArrayProperty.getJSONObject(index);
-                    int datanum1 = mJsonObjectProperty.getInt("idItem");
-                    int datanum2 = mJsonObjectProperty.getInt("amountItem");
-                    JSONObject gg = new JSONObject();
-                    if(datanum1 != idItem) {
-                        actualLength++;
-                        gg.put("idItem", datanum1);
-                        gg.put("amountItem", datanum2);
-                        ja.put(gg);
-                    }else{
-                        //remove from listCart
-                        if(listCart != null) {
-                            for (int i = 0; i < listCart.size(); i++) {
-                                if (listCart.get(i).getItemID() == idItem) {
-                                    if (listCart.get(i).getAmount() == 1) {
-                                        listCart.remove(i);
-                                    } else {
-                                        if (listCart.get(i).getAmount() > 1) {
-                                            listCart.get(i).setAmount(listCart.get(i).getAmount() - 1);
-                                        }
-                                    }
-                                }
-                            }
+    
+    public static void removeFromCart(Context context, int idResto, int idItem, ArrayList<Cart> listCart) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART, Context.MODE_PRIVATE);
+
+        Gson gson = new Gson();
+
+        String json = sharedPreferences.getString("listCart", null);
+
+        Type listType = new TypeToken<List<Cart>>() {
+        }.getType();
+        ArrayList<Cart> cartList = gson.fromJson(json, listType);
+
+        if (cartList != null) {
+            for (int i = 0; i < cartList.size(); i++) {
+                if (cartList.get(i).getItemID() == idItem) {
+                    if (cartList.get(i).getAmount() == 1 || cartList.get(i).getAmount() == 0) {
+                        cartList.remove(i);
+                    } else {
+                        if (cartList.get(i).getAmount() > 1) {
+                            cartList.get(i).setAmount(cartList.get(i).getAmount() - 1);
                         }
-                        actualLength--;
                     }
                 }
-                if(listCart != null) {
-                    Log.d("test", listCart.toString());
-                }
-                JSONObject mainObj = new JSONObject();
-                editor.putInt("idResto", idResto);
-                if(actualLength != -1) {
-                    mainObj.put("cart", ja);
-                    editor.putBoolean("initialized", true);
-                }else{
-                    editor.putBoolean("initialized", false);
-                }
-                editor.putString("pref_data", mainObj.toString()).commit();
-                editor.apply();
-                Log.d("hi",String.valueOf(mainObj));
-
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+
+        // Convert the updated list of Cart objects back to a JSON string using Gson
+        String updatedJson = gson.toJson(cartList);
+        // Save the JSON string back to shared preferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("listCart", updatedJson);
+        editor.apply();
 
     }
-    public static int ifItemExist(Context context,int idItem){
-        if(!isSharedPreferencesExist(context)){
-            return -1;
-        }
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART,Context.MODE_PRIVATE);
-        String data = sharedPreferences.getString("pref_data",null);
-        try {
-            JSONObject mainObj = new JSONObject(data);
-            JSONArray ja = mainObj.getJSONArray("cart");
-            for(int i = 0; i < ja.length(); i++){
-                JSONObject jo = ja.getJSONObject(i);
-                int idItem2 = jo.getInt("idItem");
-                int amountItem = jo.getInt("amountItem");
-                Log.d("hi",String.valueOf(idItem2));
-                Log.d("hi",String.valueOf(amountItem));
-                if(idItem == idItem2){
-                    return i;
-                }
+        public static int ifItemExist(Context context, int idItem) {
+        ArrayList<Cart> listCart = loadCart(context);
+
+        for (int i = 0; i < listCart.size(); i++) {
+            if (listCart.get(i).getItemID() == idItem) {
+                return i;
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+
         return -1;
     }
     //clear cart shared preferences
@@ -223,68 +160,38 @@ public class CartHelper {
     }
 
     public static void updateCart(Context context,int idResto, int idItem, int amountItem,ArrayList<Cart> listCart){
-        if(!isSharedPreferencesExist(context)) {
-            saveCart(context,idResto,idItem,amountItem,listCart);
-            return;
-        }
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART,Context.MODE_PRIVATE);
+        // First, get a reference to the shared preferences object
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CART, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        String jsonHistory = sharedPreferences.getString("pref_data","");
-        try {
-            JSONObject jsonObj = new JSONObject(jsonHistory);
-            JSONArray mJsonArrayProperty = jsonObj.getJSONArray("cart");
-            Log.d("hi",String.valueOf(mJsonArrayProperty));
-            /*
-            Log.d("test",mJsonArrayProperty.getString(0));
-            JSONObject mJsonObjectPropertyz = mJsonArrayProperty.getJSONObject(0);
-            int datanumz = mJsonObjectPropertyz.getInt("idItem");
-            */
-            // int datanum2 = mJsonObjectPropertyz.getInt("amountItem");
-            //Log.d("hiya",String.valueOf(datanumz));
-            try {
-                int index = 0;
-                JSONObject jo = new JSONObject();
-                if(ifItemExist(context,idItem) == -1) {
-                    Log.d("hi", "Added new items!");
-                    jo.put("idItem", idItem);
-                    jo.put("amountItem", amountItem);
-                }
-                JSONArray ja = new JSONArray();
-                if(ifItemExist(context,idItem) == -1) {
-                    ja.put(jo);
-                }
-                if(mJsonArrayProperty.length() == 0) return;
-                for (;index < mJsonArrayProperty.length(); index++) {
-                    JSONObject mJsonObjectProperty = mJsonArrayProperty.getJSONObject(index);
-                    int datanum1 = mJsonObjectProperty.getInt("idItem");
-                    int datanum2 = mJsonObjectProperty.getInt("amountItem");
-                    JSONObject gg = new JSONObject();
-                    if(datanum1 == idItem) {
-                        gg.put("idItem", idItem);
-                        gg.put("amountItem", amountItem);
-                    }else {
-                        gg.put("idItem", datanum1);
-                        gg.put("amountItem", datanum2);
-                    }
-                    ja.put(gg);
-                }
 
-                JSONObject mainObj = new JSONObject();
-                mainObj.put("cart", ja);
-                editor.putInt("idResto", idResto);
-                editor.putBoolean("initialized", true);
-                editor.putString("pref_data", mainObj.toString()).commit();
-                editor.apply();
-                Log.d("hi",String.valueOf(mainObj));
+        // Create a Gson object (you can use the same GsonBuilder that you used to save the list, if desired)
+        Gson gson = new Gson();
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        // Get the list of Cart objects from shared preferences as a JSON string
+        String json = sharedPreferences.getString("listCart", null);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+        // Convert the JSON string to a list of Cart objects using Gson
+        Type listType = new TypeToken<List<Cart>>() {}.getType();
+        ArrayList<Cart> existingList = gson.fromJson(json, listType);
+
+        // Update the list of Cart objects as needed
+        int index = ifItemExist(context,idItem);
+        if (index == -1) {
+            // Add a new Cart object to the list
+            existingList.add(new Cart(idResto, idItem, amountItem));
+        } else {
+            // Update the existing Cart object in the list
+            existingList.set(index, new Cart(idResto, idItem, amountItem));
         }
 
+        // Convert the updated list of Cart objects back to a JSON string using Gson
+        String updatedJson = gson.toJson(existingList, listType);
+
+        // Save the JSON string to shared preferences
+        editor.putString("listCart", updatedJson);
+        editor.apply();
     }
+
+
 
 }
